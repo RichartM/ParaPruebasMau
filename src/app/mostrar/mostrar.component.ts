@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule aquí
+import { Component, OnInit} from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Router } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Importa CommonModule
+
+
+
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule], // Asegúrate de que CommonModule esté importado
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-mostrar',
+  templateUrl: './mostrar.component.html',
+  styleUrl: './mostrar.component.css',
+  imports:[CommonModule],
+  standalone:true
 })
-export class HomeComponent implements OnInit {
+
+export class MostrarComponent {
   alumnos: any[] = [];
   usuarioActual: any;
 
@@ -42,7 +47,7 @@ export class HomeComponent implements OnInit {
    console.log("datos cargados");
     
   }
-
+  
   llenarData(): void {
     this.apiService.getData().subscribe(
       response => {

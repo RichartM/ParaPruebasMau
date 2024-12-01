@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ApiService } from '../service/api.service';
@@ -22,10 +23,8 @@ export class LoginComponent {
   ngOnInit(): void {
     this.apiService.authenticate('root', 'root123').subscribe(
       response => {
-        console.log("Respuesta del servidor de autenticación:", response);
+        console.log("datos cargados correctamente:");
         this.apiService.setCredentials('root', 'root123');
-        this.llenarData();
-        console.log("Autorizado :D");
       },
       error => {
         console.error('Error de autenticación:', error);
@@ -37,34 +36,34 @@ export class LoginComponent {
 
     
   
-  iniciarSesion():void{
-
+  iniciarSesion(): void {
+    // Llamamos al servicio para obtener los datos
     this.apiService.getData().subscribe(
-      response => {
+      (response) => {
         console.log('Respuesta del servidor:', response);
-        // Aquí validamos las credenciales
-        const usuario = response.alumnosResponse.alumnos.find( 
+  
+        // Validamos las credenciales comparando con los datos obtenidos
+        const usuario = response.alumnosResponse.alumnos.find(
           (user: any) => user.correo === this.correo && user.password === this.password
         );
-        
+  
         if (usuario) {
           // Si se encuentra el usuario, almacenamos los datos en sessionStorage
-          sessionStorage.setItem('usuario', JSON.stringify(usuario));  // Guardamos el usuario
+          sessionStorage.setItem('usuario', JSON.stringify(usuario)); // Guardamos el usuario en sessionStorage
+          this.apiService.setUsuarioActual(usuario); // Establecemos el usuario actual en el servicio
+          console.log('Usuario autenticado:', usuario);
+  
+          // Redirigimos al usuario a la página principal
           this.router.navigate(['/home']);
         } else {
+          // Si no coinciden las credenciales, mostramos una alerta
           alert('Credenciales incorrectas');
         }
-        
-
-        
       },
-      error => {
+      (error) => {
         console.error('Error al obtener los datos:', error);
       }
     );
-    
-    
-
   }
 
   llenarData(): void {

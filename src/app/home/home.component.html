@@ -17,7 +17,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
       <!-- Logo y nombre de la aplicación -->
-      <a class="navbar-brand" href="#">SIPAL</a>
+      <a class="navbar-brand" href="home">SIPAL</a>
       <!-- Botón de menú hamburguesa en pantallas pequeñas -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,17 +26,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="/home">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Acerca de</a>
+            <a class="nav-link active" aria-current="page" (click)="cerrarSesion()">Salir</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contacto</a>
-          </li>
+          
         </ul>
       </div>
     </div>
@@ -48,7 +43,6 @@
       <div class="col text-center">
         <h1>Bienvenido {{usuarioActual.primerNombre}}
         </h1>
-        <p class="lead">Esta es una página de ejemplo utilizando Bootstrap 5 con un menú hamburguesa. ¡Aprovecha todas las características de Bootstrap!</p>
       </div>
     </div>
     
@@ -56,31 +50,28 @@
     <div class="row mt-5">
       <div class="col-md-4">
         <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Imagen de ejemplo">
+          <img src="https://cdn.pixabay.com/photo/2021/07/25/08/07/add-6491203_640.png" style="height: 300px; width: 400px;" class="card-img-top" alt="Imagen de ejemplo">
           <div class="card-body">
-            <h5 class="card-title">Crear</h5>
-            <p class="card-text">Descripción del contenido de la tarjeta. Aquí puedes añadir más detalles.</p>
-            <a href="#" class="btn btn-primary">Ver más</a>
+            <p class="card-text">En esta área se encuentra la informacion del alumno {{usuarioActual.primerNombre}}</p>
+            <a href="/crear" class="btn btn-primary">Crear</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Imagen de ejemplo">
+          <img src="https://cdn-icons-png.flaticon.com/128/12116/12116350.png" style="height: 300px; width: 400px; " class="card-img-top" alt="Imagen de ejemplo">
           <div class="card-body">
-            <h5 class="card-title">Editar</h5>
-            <p class="card-text">Descripción del contenido de la tarjeta. Aquí puedes añadir más detalles.</p>
-            <a href="#" class="btn btn-primary">Ver más</a>
+            <p class="card-text">En esta área se encuentra la informacion del alumno  {{usuarioActual.primerNombre}}</p>
+            <a href="/editar" class="btn btn-primary">Editar</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card">
-          <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Imagen de ejemplo">
+          <img src="https://cdn-icons-png.flaticon.com/128/12655/12655820.png" style="height: 300px; width: 400px; "  class="card-img-top" alt="Imagen de ejemplo">
           <div class="card-body">
-            <h5 class="card-title">Mostrar</h5>
-            <p class="card-text">Descripción del contenido de la tarjeta. Aquí puedes añadir más detalles.</p>
-            <a href="#" class="btn btn-primary">Ver más</a>
+            <p class="card-text">En esta área se encuentra la informacion del alumno  {{usuarioActual.primerNombre}}</p>
+            <a href="/mostrar" class="btn btn-primary">Mostrar</a>
           </div>
         </div>
       </div>

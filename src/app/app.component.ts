@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './service/api.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterModule], // Importa RouterModule aquí
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'apiRest';
+export class AppComponent implements OnInit {
+  constructor(private apiService: ApiService, private router: Router) {}
+
+  ngOnInit(): void {
+    const usuario = sessionStorage.getItem('usuario'); // Recupera los datos del usuario
+    if (usuario) {
+      this.apiService.setUsuarioActual(JSON.parse(usuario)); // Establece la sesión activa
+      console.log('Sesión restaurada:', JSON.parse(usuario));
+    } else {
+      console.log('No hay sesión activa');
+      this.router.navigate(['/login']); // Redirige al login si no hay sesión
+    }
+  }
 }

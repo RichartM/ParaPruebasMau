@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
+  private usuarioActual: any = null;
+
   private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
   private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
   private password: string = '';
@@ -42,5 +44,19 @@ export class ApiService {
     this.username = username;
     this.password = password;
   }
+
+  // Verificar si el usuario está autenticado
+  isAuthenticated(): boolean {
+    return !!sessionStorage.getItem('usuario'); // Devuelve true si hay usuario
+  }
+  setUsuarioActual(usuario: any): void {
+    
+    this.usuarioActual = usuario;
+  }
+
+  getUsuarioActual(): any {
+    return this.usuarioActual;
+  }
+ 
 
 }

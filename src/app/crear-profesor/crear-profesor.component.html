@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Usuario - Bootstrap 5</title>
+  <!-- Enlace al CSS de Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Barra de navegación -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home">SIPAL</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="/home">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" (click)="cerrarSesion()">Salir</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="container mt-4">
+    <h2>Registrar Profesor</h2>
+    <form (ngSubmit)="registrarProfesor()">
+    
+      <div class="mb-3">
+        <label for="primerNombre" class="form-label">Primer nombre</label>
+        <input id="primerNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerNombre" name="primerNombre" required />
+      </div>
+      <div class="mb-3">
+        <label for="segundoNombre" class="form-label">Segundo nombre</label>
+        <input id="segundoNombre" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoNombre" name="segundoNombre" required />
+      </div>
+    
+      <div class="mb-3">
+        <label for="primerApellido" class="form-label">Primer apellido</label>
+        <input id="primerApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.primerApellido" name="primerApellido" required />
+      </div>
+    
+      <div class="mb-3">
+        <label for="segundoApellido" class="form-label">Segundo apellido</label>
+        <input id="segundoApellido" type="text" class="form-control" [(ngModel)]="nuevoDocente.segundoApellido" name="segundoApellido" required />
+      </div>
+    
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input id="correo" type="text" class="form-control" [(ngModel)]="nuevoDocente.correo" name="correo" required />
+      </div>
+    
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input id="password" type="text" class="form-control" [(ngModel)]="nuevoDocente.password" name="password" required />
+      </div>
+    
+      <div class="mb-3">
+        <label for="sexo" class="form-label">Sexo</label>
+        <input id="sexo" type="text" class="form-control" [(ngModel)]="nuevoDocente.sexo" name="sexo" required />
+      </div>
+    
+    
+      <div class="form-check mb-3">
+        <input id="estado" type="checkbox" class="form-check-input" [(ngModel)]="nuevoDocente.estado" name="estado" />
+        <label class="form-check-label" for="estado">Activo</label>
+      </div>
+      <div class="mb-3">
+        <label for="id_grupo" class="form-label">Grupo</label>
+        <input id="id_grupo" type="id_grupo" class="form-control" [(ngModel)]="nuevoDocente.grupos.id_grupo" name="id_grupo" required />
+      </div>
+      <div class="mb-3">
+        <label for="materias" class="form-label">Materia</label>
+        <input id="materias" type="number" class="form-control" [(ngModel)]="nuevoDocente.materias.idMateria" name="materias" required />
+      </div>
+    
+      <button type="submit" class="btn btn-primary">Registrar profesor</button>
+    </form>
+      
+      
+  </div>
+
+  <!-- Scripts de Bootstrap 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

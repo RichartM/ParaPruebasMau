@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiProfesorService {
   private usuarioActual: any = null;
 
-  private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
+  private urlApi = 'http://localhost:8080/v4/docente';  // URL del backend
   private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
   private password: string = '';
 
@@ -16,6 +16,7 @@ export class ApiService {
 
   // Método para autenticar y obtener acceso usando Basic Authentication
   authenticate(username: string, password: string): Observable<any> {
+    
     // Codifica las credenciales en base64
     const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
     console.log(authHeader);  // Verifica si la codificación es correcta
@@ -39,8 +40,6 @@ export class ApiService {
     return this.http.get(`${this.urlApi}`, { headers });
   }
 
-  
-
   // Método para guardar las credenciales de autenticación si es necesario
   setCredentials(username: string, password: string): void {
     this.username = username;
@@ -63,7 +62,7 @@ export class ApiService {
   }
 
   // Método para actualizar los datos del usuario
-  actualizarUsuario(id: number, usuario: any): Observable<any> {
+  actualizarDocente(id: number, usuario: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
@@ -73,8 +72,7 @@ export class ApiService {
     return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
   }
 
-  registrarAlumno(alumno: any): Observable<any> {
-    return this.http.post(this.urlApi, alumno);
+  registrarDocente(docente: any): Observable<any> {
+    return this.http.post(this.urlApi, docente);
   }
-  
 }

@@ -5,16 +5,17 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiGruposService {
   private usuarioActual: any = null;
 
-  private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
+  private urlApi = 'http://localhost:8080/v1/grupos';  // URL del backend
   private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
   private password: string = '';
 
   constructor(private http: HttpClient) {}
 
   // Método para autenticar y obtener acceso usando Basic Authentication
+
   authenticate(username: string, password: string): Observable<any> {
     // Codifica las credenciales en base64
     const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
@@ -39,8 +40,6 @@ export class ApiService {
     return this.http.get(`${this.urlApi}`, { headers });
   }
 
-  
-
   // Método para guardar las credenciales de autenticación si es necesario
   setCredentials(username: string, password: string): void {
     this.username = username;
@@ -49,32 +48,41 @@ export class ApiService {
 
   // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
+
     return !!sessionStorage.getItem('usuario'); // Devuelve true si hay usuario
+  
   }
 
   // Método para guardar los datos del usuario en el servicio
   setUsuarioActual(usuario: any): void {
+
     this.usuarioActual = usuario;
+  
   }
 
   // Obtener los datos del usuario actual
   getUsuarioActual(): any {
+
+
     return this.usuarioActual;
+  
+
   }
 
   // Método para actualizar los datos del usuario
-  actualizarUsuario(id: number, usuario: any): Observable<any> {
+  actualizarGrupo(id: number, usuario: any): Observable<any> {
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
     });
     
-
     return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
+    
+
   }
 
-  registrarAlumno(alumno: any): Observable<any> {
-    return this.http.post(this.urlApi, alumno);
+  registrarGrupo(grupo: any): Observable<any> {
+    return this.http.post(this.urlApi, grupo);
   }
-  
 }

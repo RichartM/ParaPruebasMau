@@ -5,10 +5,10 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiMateriaService {
   private usuarioActual: any = null;
 
-  private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
+  private urlApi = 'http://localhost:8080/v2/materias';  // URL del backend
   private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
   private password: string = '';
 
@@ -39,8 +39,6 @@ export class ApiService {
     return this.http.get(`${this.urlApi}`, { headers });
   }
 
-  
-
   // Método para guardar las credenciales de autenticación si es necesario
   setCredentials(username: string, password: string): void {
     this.username = username;
@@ -63,7 +61,7 @@ export class ApiService {
   }
 
   // Método para actualizar los datos del usuario
-  actualizarUsuario(id: number, usuario: any): Observable<any> {
+  actualizarMateria(id: number, usuario: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
@@ -73,8 +71,7 @@ export class ApiService {
     return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
   }
 
-  registrarAlumno(alumno: any): Observable<any> {
-    return this.http.post(this.urlApi, alumno);
+  registrarMateria(materias: any): Observable<any> {
+    return this.http.post(this.urlApi, materias);
   }
-  
 }

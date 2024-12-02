@@ -28,6 +28,7 @@ export class MostrarComponent {
         this.apiService.setCredentials('root', 'root123');
       
         console.log("datos cargados :D");
+        this.llenarData();  
       },
       error => {
         console.error('Error de autenticación:', error);
@@ -45,7 +46,7 @@ export class MostrarComponent {
     }
 
    console.log("datos cargados");
-    
+   console.log('Estructura de alumnos:', this.alumnos);
   }
   
   llenarData(): void {
@@ -55,6 +56,7 @@ export class MostrarComponent {
         if (response && response.alumnosResponse && response.alumnosResponse.alumnos) {
           this.alumnos = response.alumnosResponse.alumnos;
           console.log('Alumnos cargados:', this.alumnos);
+          
         } else {
           console.warn('Estructura de respuesta inesperada:', response);
         }
@@ -65,6 +67,7 @@ export class MostrarComponent {
       }
     );
   }
+  
   
   cerrarSesion(): void {
     sessionStorage.removeItem('usuario'); // Elimina los datos del usuario

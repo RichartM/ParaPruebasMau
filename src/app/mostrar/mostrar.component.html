@@ -44,23 +44,28 @@
     <h2 class="text-center mb-4">Alumno {{usuarioActual.primerNombre}}</h2>
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
-            <thead class="table-dark">
+            <thead class="table-blue">
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo</th>
                     <th>Sexo</th>
                     <th>Grupo</th>
+                    <th>Estado</th>
+                    <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
-                <tr >
-                    <td>{{usuarioActual.primerNombre}}   {{usuarioActual.segundoNombre}}</td>
-                    <td>{{usuarioActual.primerApellido}}   {{usuarioActual.segundoApellido}}</td>
-                    <td>{{usuarioActual.correo}}</td>
-                    <td>{{usuarioActual.sexo}}</td>
-                    <td>{{usuarioActual.grupos.grupo}}</td>
-                </tr>
+              <tr *ngFor="let alumno of alumnos">
+                <td>{{ alumno.primerNombre }} {{ alumno.segundoNombre }}</td>
+                <td>{{ alumno.primerApellido }} {{ alumno.segundoApellido }}</td>
+                <td>{{ alumno.correo }}</td>
+                <td>{{ alumno.sexo }}</td>
+                <td>{{ alumno.grupos?.grupo }}</td>
+                <td>{{ alumno.estado }}</td>
+                <td>
+                  <img *ngIf="alumno.foto" src="data:image/png;base64,{{ alumno.foto }}" alt="Foto" style="width: 200px;">
+                </td>
                 <!-- Agrega más filas según sea necesario -->
             </tbody>
         </table>

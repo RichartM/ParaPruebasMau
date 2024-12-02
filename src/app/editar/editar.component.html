@@ -89,6 +89,36 @@
       <input type="text" id="grupos" [(ngModel)]="usuarioActual.grupos.id_grupo" name="grupos" class="form-control">
     </div>
 
+
+
+    
+
+
+    <div class="mb-3">
+      <label for="foto" class="form-label">Foto:</label>
+      <!-- Cambiamos el tipo a "file" para aceptar imágenes -->
+      <input type="file" id="foto" name="foto" class="form-control" accept="image/*" (change)="procesarImagen($event)">
+    </div>
+    <div class="mb-3">
+      <label for="base64" class="form-label">Base64:</label>
+      <!-- Mostramos el resultado Base64 recortado aquí -->
+      <input type="text" id="base64" name="base64" class="form-control" readonly>
+    </div>
+   
+    
+    
+    
+    
+    
+    
+    <div class="mb-3">
+      <label for="estado" class="form-label">Estado:</label>
+      <select id="estado" [(ngModel)]="usuarioActual.estado" name="estado" class="form-select">
+        <option [ngValue]="0">Inactivo</option>
+        <option [ngValue]="1">Activo</option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </form>
 </div>

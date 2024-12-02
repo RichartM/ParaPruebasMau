@@ -1,37 +1,40 @@
-import { Component } from '@angular/core';
-import { ApiService } from '../service/api.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ApiProfesorService } from '../service/api-profesor.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-crear',
+  selector: 'app-crear-profesor',
   imports: [CommonModule,FormsModule],
-  templateUrl: './crear.component.html',
-  styleUrl: './crear.component.css',
+  templateUrl: './crear-profesor.component.html',
+  styleUrl: './crear-profesor.component.css',
   standalone:true
 })
-export class CrearComponent {
+export class CrearProfesorComponent {
 
-  nuevoAlumno: any = {
-    primerNombre: '',
-    segundoNombre: '',
-    primerApellido: '',
-    segundoApellido: '',
-    correo: '',
-    password: '',
-    foto: null,
-    sexo: '',
+  // Cambiar el modelo para solo registrar el grupo
+  nuevoDocente: any = {  // Valor predeterminado
+    primerNombre:'',
+    segundoNombre:'',
+    primerApellido:'',
+    segundoApellido:'',
+    correo:'',
+    password:'',
+    sexo:'',
     estado: true,
     grupos: {
       id_grupo: 0
+    },
+    materias: {
+      idMateria:0
     }
-    
-  }; 
+  };
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(private apiService: ApiProfesorService, private router: Router) {}
 
   ngOnInit(): void {
+    // Aquí sigue la validación de autenticación si es necesario
     if (!this.apiService.isAuthenticated()) {
       console.log('Sesión no iniciada. Redirigiendo al login...');
       this.router.navigate(['/login']);
@@ -41,41 +44,40 @@ export class CrearComponent {
     }
   }
 
-  registrarAlumno(): void {
-    console.log('Datos a enviar:', this.nuevoAlumno);
-    this.apiService.registrarAlumno(this.nuevoAlumno).subscribe({
+  // Cambiar el método para registrar un grupo
+  registrarProfesor(): void {
+    console.log('Datos del grupo a enviar:', this.nuevoDocente);
+    this.apiService.registrarDocente(this.nuevoDocente).subscribe({
       next: (response) => {
-        console.log('Alumno registrado con éxito:', response);
-        alert('Alumno registrado correctamente');
-        this.router.navigate(['/alumnos']); // Redirigir a la lista de alumnos o página deseada
+        console.log('Grupo registrado con éxito:', response);
+        alert('Grupo registrado correctamente');
+       
       },
       error: (error) => {
-        console.error('Error al registrar el alumno:', error);
-        alert('Error al registrar el alumno');
+        console.error('Error al registrar el grupo:', error);
+        alert('Error al registrar el grupo');
       }
     });
   }
 
+  // Cambiar la función de imagen, si es necesario (puedes omitirla si no se necesita)
   procesarImagen(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
 
     if (file) {
       const reader = new FileReader();
-
       reader.onload = () => {
         const base64 = reader.result as string;
         const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); // Quitamos el prefijo
-        this.nuevoAlumno.foto = trimmedBase64; // Asignamos al modelo
         console.log('Base64 recortado:', trimmedBase64);
       };
-
       reader.readAsDataURL(file); // Leemos el archivo como Data URL
     } else {
       console.log('No se seleccionó ningún archivo');
     }
-  }
 
+  }
   cerrarSesion(): void {
     sessionStorage.removeItem('usuario');
     this.apiService.setUsuarioActual(null);

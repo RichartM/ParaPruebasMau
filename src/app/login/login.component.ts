@@ -46,8 +46,11 @@ export class LoginComponent {
         const usuario = response.alumnosResponse.alumnos.find(
           (user: any) => user.correo === this.correo && user.password === this.password
         );
-  
+       
+
+        if (usuario.estado){
         if (usuario) {
+          
           // Si se encuentra el usuario, almacenamos los datos en sessionStorage
           sessionStorage.setItem('usuario', JSON.stringify(usuario)); // Guardamos el usuario en sessionStorage
           this.apiService.setUsuarioActual(usuario); // Establecemos el usuario actual en el servicio
@@ -55,7 +58,8 @@ export class LoginComponent {
   
           // Redirigimos al usuario a la página principal
           this.router.navigate(['/home']);
-        } else {
+        }  
+        }else {
           // Si no coinciden las credenciales, mostramos una alerta
           alert('Credenciales incorrectas');
         }

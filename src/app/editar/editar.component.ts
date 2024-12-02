@@ -65,11 +65,10 @@ export class EditarComponent {
   }
   guardarCambios(): void {
     const idUsuario = this.usuarioActual.id_alumno;
+    
     if (this.usuarioActual) {
-      // Suponiendo que el id está en `id_alumno`
+      
       const id = this.usuarioActual.id_alumno;
-      const idGrupo = this.usuarioActual.grupos.id_grupo;
-      console.log("el grupo actual " , idGrupo);
       // Llamar al servicio para actualizar el usuario
       this.apiService.actualizarUsuario(id, this.usuarioActual).subscribe(
         response => {
@@ -82,6 +81,27 @@ export class EditarComponent {
       );
     } else {
       console.log('No se ha encontrado al usuario actual');
+    }
+  }
+
+
+  procesarImagen(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); // Quitamos el prefijo
+        this.usuarioActual.foto = trimmedBase64; // Asignamos al modelo
+        console.log('Base64 recortado:', trimmedBase64);
+      };
+
+      reader.readAsDataURL(file); // Leemos el archivo como Data URL
+    } else {
+      console.log('No se seleccionó ningún archivo');
     }
   }
 

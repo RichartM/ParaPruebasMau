@@ -49,14 +49,24 @@ export class ApiService {
   isAuthenticated(): boolean {
     return !!sessionStorage.getItem('usuario'); // Devuelve true si hay usuario
   }
+
+  // Método para guardar los datos del usuario en el servicio
   setUsuarioActual(usuario: any): void {
-    
     this.usuarioActual = usuario;
   }
 
+  // Obtener los datos del usuario actual
   getUsuarioActual(): any {
     return this.usuarioActual;
   }
- 
 
+  // Método para actualizar los datos del usuario
+  actualizarUsuario(id: number, usuario: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
+    });
+
+    return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Router } from '@angular/router';
-import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common'; // Importa CommonModule
 
 

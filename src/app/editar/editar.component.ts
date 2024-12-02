@@ -68,7 +68,8 @@ export class EditarComponent {
     if (this.usuarioActual) {
       // Suponiendo que el id está en `id_alumno`
       const id = this.usuarioActual.id_alumno;
-      
+      const idGrupo = this.usuarioActual.grupos.id_grupo;
+      console.log("el grupo actual " , idGrupo);
       // Llamar al servicio para actualizar el usuario
       this.apiService.actualizarUsuario(id, this.usuarioActual).subscribe(
         response => {

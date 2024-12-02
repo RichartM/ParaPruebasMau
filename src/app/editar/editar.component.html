@@ -86,13 +86,11 @@
 
     <div class="mb-3">
       <label for="grupos" class="form-label">Grupos:</label>
-      <input type="text" id="grupos" [(ngModel)]="usuarioActual.grupos" name="grupos" class="form-control">
+      <input type="text" id="grupos" [(ngModel)]="usuarioActual.grupos.id_grupo" name="grupos" class="form-control">
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </form>
-
-  <button (click)="cerrarSesion()" class="btn btn-danger mt-3">Cerrar Sesión</button>
 </div>
 
   <!-- Enlace a los scripts de Bootstrap 5 -->

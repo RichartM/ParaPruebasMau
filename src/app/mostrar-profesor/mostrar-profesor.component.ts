@@ -48,7 +48,7 @@ export class MostrarProfesorComponent {
       },
       (error) => {
         console.error('Error al obtener datos de docentes:', error);
-        this.router.navigate(['/login']);
+     
       }
     );
   }

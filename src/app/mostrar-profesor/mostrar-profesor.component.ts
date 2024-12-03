@@ -2,73 +2,96 @@ import { Component } from '@angular/core';
 import { ApiProfesorService } from '../service/api-profesor.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mostrar-profesor',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './mostrar-profesor.component.html',
   styleUrl: './mostrar-profesor.component.css',
   standalone: true
 })
 export class MostrarProfesorComponent {
-  profesores: any[] = [];
-  usuarioActual: any;
+  docentes: any[] = []; // Lista de docentes
+  docenteActual: any = {}; // Docente seleccionado para edición
+  modoEdicion: boolean = false; // Modo edición
 
-  constructor(private apiService: ApiProfesorService,private router:Router) {}
+  constructor(private apiService: ApiProfesorService, private router: Router) {}
 
   ngOnInit(): void {
     this.apiService.authenticate('root', 'root123').subscribe(
-      response => {
-        console.log("Respuesta del servidor de autenticación:", response);
+      (response) => {
+        console.log('Autenticación exitosa:', response);
         this.apiService.setCredentials('root', 'root123');
-      
-        console.log("datos cargados :D");
-        this.llenarData();  
+        this.llenarData();
       },
-      error => {
+      (error) => {
         console.error('Error de autenticación:', error);
+        this.router.navigate(['/login']);
       }
     );
 
     if (!this.apiService.isAuthenticated()) {
-      console.log('Sesión no iniciada. Redirigiendo al login...');
-      this.router.navigate(['/login']); // Redirigir al login si no está autenticado
-      return;
-    }else{
-        console.log("Sesion inciada");
-        this.usuarioActual = this.apiService.getUsuarioActual();
-        console.log('Datos del usuario actual:', this.usuarioActual);
+      this.router.navigate(['/login']);
     }
-
-   console.log("datos cargados");
-   console.log('Estructura de los grupos:', this.profesores);
   }
-  
+
   llenarData(): void {
-    this.apiService.getData().subscribe(
-      response => {
-        console.log('Respuesta del servidor:', response);
+    this.apiService.getDocentes().subscribe(
+      (response) => {
+        console.log('Datos recibidos:', response);
         if (response && response.docenteResponse && response.docenteResponse.docentes) {
-          this.profesores = response.docenteResponse.docentes;
-          console.log('grupos cargados:', this.profesores);
-          
+          this.docentes = response.docenteResponse.docentes;
         } else {
           console.warn('Estructura de respuesta inesperada:', response);
         }
-
       },
-      error => {
-        console.error('Error al obtener los datos:', error);
-        this.router.navigate(['/login']); // Redirigir si hay un error al obtener los datos
+      (error) => {
+        console.error('Error al obtener datos de docentes:', error);
+        this.router.navigate(['/login']);
       }
     );
   }
-  
-  
-  cerrarSesion(): void {
-    sessionStorage.removeItem('usuario'); // Elimina los datos del usuario
-    this.apiService.setUsuarioActual(null); // Limpia la sesión en el servicio
-    console.log('Sesión cerrada');
-    this.router.navigate(['/login']); // Redirige al login
+
+  seleccionarDocente(docente: any): void {
+    this.docenteActual = { ...docente }; // Clonamos el docente seleccionado
+    this.modoEdicion = true;
+    console.log('Docente seleccionado para edición:', this.docenteActual);
   }
+
+  guardarCambios(): void {
+    if (this.docenteActual && this.docenteActual.id_docente) {
+      const id = this.docenteActual.id_docente;
+      this.apiService.actualizarDocente(id, this.docenteActual).subscribe(
+        (response) => {
+          console.log('Docente actualizado con éxito:', response);
+          const index = this.docentes.findIndex((d) => d.id_docente === id);
+          if (index !== -1) {
+            this.docentes[index] = { ...this.docenteActual };
+          }
+          alert('¡Cambios guardados con éxito!');
+          this.modoEdicion = false;
+        },
+        (error) => {
+          console.error('Error al actualizar el docente:', error);
+          alert('Error al guardar los cambios. Intente nuevamente.');
+        }
+      );
+    } else {
+      console.warn('No hay docente seleccionado o faltan datos');
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.docenteActual = {};
+    this.modoEdicion = false;
+    console.log('Edición cancelada');
+  }
+
+  cerrarSesion(): void {
+    sessionStorage.removeItem('usuario');
+    this.apiService.setUsuarioActual(null);
+    this.router.navigate(['/login']);
+  }
+
 }

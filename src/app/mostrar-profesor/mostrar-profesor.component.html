@@ -37,40 +37,138 @@
     </div>
   </nav>
 
- <!-- CONTENIDO DE LA PAGINA -->
-
-
- <div class="container mt-4">
-    <h2 class="text-center mb-4">Grupos</h2>
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="table-blue">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>correo</th>
-                    <th>sexo</th>
-                    <th>estado</th>
-                    <th>grupo</th>
-                    <th>materia</th>
-                    
-                </tr>
-            </thead>
-            <tbody>     
-              <tr *ngFor="let profe of profesores">
-                <td>{{ profe.primerNombre }}{{ profe.segundoNombre }}</td>
-                <td>{{ profe.primerApellido }}{{ profe.segundoApellido }}</td>
-                <td>{{ profe.correo }}</td>
-                <td>{{ profe.sexo }}</td>
-                <td>{{ profe.estado }}</td>
-                <td>{{ profe.grupos.grupo }}</td>
-                <td>{{ profe.materias.nombreMateria }}</td>
-                <!-- Agrega más filas según sea necesario -->
-              </tr>
-            </tbody>
-        </table>
+  <div class="container mt-5">
+    <h2 class="text-center">Lista de Docentes</h2>
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Nombre Completo</th>
+          <th>Correo</th>
+          <th>Sexo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let docente of docentes">
+          <td>{{ docente.id_docente }}</td>
+          <td>{{ docente.primerNombre }} {{ docente.primerApellido }}</td>
+          <td>{{ docente.correo }}</td>
+          <td>{{ docente.sexo }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="seleccionarDocente(docente)">
+              Editar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Formulario de edición -->
+    <div *ngIf="modoEdicion" class="card mt-5">
+      <div class="card-header bg-primary text-white">
+        <h4 class="card-title mb-0">Editar Docente</h4>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="primerNombre" class="form-label">Primer Nombre</label>
+              <input
+                type="text"
+                id="primerNombre"
+                class="form-control"
+                [(ngModel)]="docenteActual.primerNombre"
+                name="primerNombre"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="segundoNombre" class="form-label">Segundo Nombre</label>
+              <input
+                type="text"
+                id="segundoNombre"
+                class="form-control"
+                [(ngModel)]="docenteActual.segundoNombre"
+                name="segundoNombre"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="primerApellido" class="form-label">Primer Apellido</label>
+              <input
+                type="text"
+                id="primerApellido"
+                class="form-control"
+                [(ngModel)]="docenteActual.primerApellido"
+                name="primerApellido"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+              <input
+                type="text"
+                id="segundoApellido"
+                class="form-control"
+                [(ngModel)]="docenteActual.segundoApellido"
+                name="segundoApellido"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="correo" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                id="correo"
+                class="form-control"
+                [(ngModel)]="docenteActual.correo"
+                name="correo"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="sexo" class="form-label">Sexo</label>
+              <select
+                id="sexo"
+                class="form-select"
+                [(ngModel)]="docenteActual.sexo"
+                name="sexo"
+              >
+                <option value="Femenino">Femenino</option>
+                <option value="Masculino">Masculino</option>
+              </select>
+            </div>
+          </div>
+          <div class="row g-3 mt-3">
+            <div class="col-md-6">
+              <label for="grupo" class="form-label">Grupo</label>
+              <input
+                type="text"
+                id="grupo"
+                class="form-control"
+                [(ngModel)]="docenteActual.grupos.grupo"
+                name="grupo"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="materia" class="form-label">Materia</label>
+              <input
+                type="text"
+                id="materia"
+                class="form-control"
+                [(ngModel)]="docenteActual.materias.nombreMateria"
+                name="materia"
+              />
+            </div>
+          </div>
+          <div class="mt-4 text-end">
+            <button type="button" class="btn btn-success" (click)="guardarCambios()">
+              Guardar Cambios
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 
   <!-- Enlace a los scripts de Bootstrap 5 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

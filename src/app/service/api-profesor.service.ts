@@ -62,16 +62,16 @@ export class ApiProfesorService {
   }
 
   // Método para actualizar los datos del usuario
-  actualizarDocente(id: number, usuario: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
-    });
-    
-
-    return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
+  actualizarDocente(id: number, docente: any): Observable<any> {
+    return this.http.put(`URL_DE_LA_API/docentes/${id}`, docente);
   }
 
+  getDocentes(): Observable<any> {
+    return this.http.get('URL_DE_LA_API/docentes');
+  }
+  
+  
+  
   registrarDocente(docente: any): Observable<any> {
     return this.http.post(this.urlApi, docente);
   }

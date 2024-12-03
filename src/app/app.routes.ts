@@ -7,6 +7,10 @@ import { EditarComponent } from './editar/editar.component';
 import { CrearGrupoComponent } from './crear-grupo/crear-grupo.component';
 import { CrearMateriaComponent } from './crear-materia/crear-materia.component';
 import { CrearProfesorComponent } from './crear-profesor/crear-profesor.component';
+import { MostrarGruposComponent } from './mostrar-grupos/mostrar-grupos.component';
+import { MostrarMateriasComponent } from './mostrar-materias/mostrar-materias.component';
+import { EditarGrupoComponent } from './editar-grupo/editar-grupo.component';
+import { MostrarProfesorComponent } from './mostrar-profesor/mostrar-profesor.component';
 
 
 export const routes: Routes = [
@@ -19,8 +23,10 @@ export const routes: Routes = [
     {path: 'crear-grupo', component:CrearGrupoComponent},
     {path: 'crear-materia', component:CrearMateriaComponent},
     {path: 'crear-profesor', component:CrearProfesorComponent},
-    {path: 'editar-grupo', component:EditarComponent},
-    {path: 'mostrar-grupo', component:MostrarComponent},
+    {path: 'editar-grupo', component:EditarGrupoComponent},
+    {path: 'mostrar-grupo', component:MostrarGruposComponent},
+    {path: 'mostrar-materia', component:MostrarMateriasComponent},
+    {path: 'mostrar-profesor', component:MostrarProfesorComponent},
     { path: '**', redirectTo: '/login' }
 
 ];

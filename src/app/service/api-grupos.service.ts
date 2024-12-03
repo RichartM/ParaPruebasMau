@@ -69,17 +69,11 @@ export class ApiGruposService {
 
   }
 
-  // Método para actualizar los datos del usuario
-  actualizarGrupo(id: number, usuario: any): Observable<any> {
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
-    });
-    
-    return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
-    
-
+  // Método para actualizar los datos de los grupos
+  actualizarGrupo(id: number, grupo: any): Observable<any> {
+    const url = `http://localhost:8080/v1/grupos/${id}`;
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.put(url, grupo, { headers });
   }
 
   registrarGrupo(grupo: any): Observable<any> {

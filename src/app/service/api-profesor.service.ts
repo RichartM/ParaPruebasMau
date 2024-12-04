@@ -62,12 +62,17 @@ export class ApiProfesorService {
   }
 
   // Método para actualizar los datos del usuario
-  actualizarDocente(id: number, docente: any): Observable<any> {
-    return this.http.put(`URL_DE_LA_API/docentes/${id}`, docente);
+  actualizarDocente(id: number, grupo: any): Observable<any> {
+    const url = `http://localhost:8080/v4/docente/${id}`;
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.put(url, grupo, { headers });
   }
 
+
   getDocentes(): Observable<any> {
-    return this.http.get('URL_DE_LA_API/docentes');
+    const url = this.urlApi;
+    const headers = { 'Content-Type': 'application/json' };
+    return this.http.get('http://localhost:8080/v4/docente' );
   }
   
   

@@ -62,10 +62,19 @@
         <label for="password" class="form-label">Contraseña</label>
         <input id="password" type="text" class="form-control" [(ngModel)]="nuevoDocente.password" name="password" required />
       </div>
-    
       <div class="mb-3">
         <label for="sexo" class="form-label">Sexo</label>
-        <input id="sexo" type="text" class="form-control" [(ngModel)]="nuevoDocente.sexo" name="sexo" required />
+        <select
+          id="sexo"
+          class="form-control"
+          [(ngModel)]="nuevoDocente.sexo"
+          name="sexo"
+          required
+        >
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Hombre">Hombre</option>
+          <option value="Mujer">Mujer</option>
+        </select>
       </div>
     
     

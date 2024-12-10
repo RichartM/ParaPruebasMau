@@ -31,12 +31,8 @@
 
   <!-- Contenido principal -->
   <div class="container mt-4">
-    <h2>Registrar Usuario</h2>
+    <h2>Registrar Grupo</h2>
     <form (ngSubmit)="registrarGrupo()">
-      <div class="mb-3">
-        <label for="grado" class="form-label">Id_grupo</label>
-        <input id="grado" type="number" class="form-control" [(ngModel)]="nuevoGrupo.id_grupo" name="grado" required />
-      </div>
       <div class="mb-3">
         <label for="grado" class="form-label">Grado</label>
         <input id="grado" type="number" class="form-control" [(ngModel)]="nuevoGrupo.grado" name="grado" required />
@@ -51,16 +47,8 @@
         <label for="carrera" class="form-label">Carrera</label>
         <input id="carrera" type="text" class="form-control" [(ngModel)]="nuevoGrupo.carrera" name="carrera" required />
       </div>
-    
-      <div class="form-check mb-3">
-        <input id="estado" type="checkbox" class="form-check-input" [(ngModel)]="nuevoGrupo.estado" name="estado" />
-        <label class="form-check-label" for="estado">Activo</label>
-      </div>
-    
       <button type="submit" class="btn btn-primary">Registrar Grupo</button>
     </form>
-      
-      
   </div>
 
   <!-- Scripts de Bootstrap 5 -->

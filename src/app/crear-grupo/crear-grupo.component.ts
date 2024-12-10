@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { ApiGruposService } from '../service/api-grupos.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  // Aquí importamos FormsModule
+import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2'; 
 
 @Component({
   selector: 'app-crear-grupo',
-  imports: [CommonModule, FormsModule],  // Asegúrate de solo importar FormsModule aquí
+  imports: [CommonModule, FormsModule], 
   templateUrl: './crear-grupo.component.html',
-  styleUrls: ['./crear-grupo.component.css'],  // Corregí 'styleUrl' a 'styleUrls'
+  styleUrls: ['./crear-grupo.component.css'], 
   standalone: true
 })
 export class CrearGrupoComponent {
 
-  // Cambiar el modelo para solo registrar el grupo
-  nuevoGrupo: any = {  // Valor predeterminado
+  nuevoGrupo: any = { 
     grado: 0,
     grupo: '',
     carrera: '',
@@ -24,7 +24,6 @@ export class CrearGrupoComponent {
   constructor(private apiService: ApiGruposService, private router: Router) {}
 
   ngOnInit(): void {
-    // Aquí sigue la validación de autenticación si es necesario
     if (!this.apiService.isAuthenticated()) {
       console.log('Sesión no iniciada. Redirigiendo al login...');
       this.router.navigate(['/login']);
@@ -34,23 +33,43 @@ export class CrearGrupoComponent {
     }
   }
 
-  // Cambiar el método para registrar un grupo
   registrarGrupo(): void {
-    console.log('Datos del grupo a enviar:', this.nuevoGrupo);
-    this.apiService.registrarGrupo(this.nuevoGrupo).subscribe({
-      next: (response) => {
-        console.log('Grupo registrado con éxito:', response);
-        alert('Grupo registrado correctamente');
-        this.router.navigate(['/grupos']); // Redirigir a la lista de grupos o página deseada
-      },
-      error: (error) => {
-        console.error('Error al registrar el grupo:', error);
-        alert('Error al registrar el grupo');
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Se registrará el grupo con los datos proporcionados.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Registrar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('Datos del grupo a enviar:', this.nuevoGrupo);
+        this.apiService.registrarGrupo(this.nuevoGrupo).subscribe({
+          next: (response) => {
+            console.log('Grupo registrado con éxito:', response);
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Grupo registrado correctamente.',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            }).then(() => {
+              this.router.navigate(['/grupos']);
+            });
+          },
+          error: (error) => {
+            console.error('Error al registrar el grupo:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo registrar el grupo. Inténtalo nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        });
       }
     });
   }
 
-  // Cambiar la función de imagen, si es necesario (puedes omitirla si no se necesita)
   procesarImagen(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -59,10 +78,10 @@ export class CrearGrupoComponent {
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result as string;
-        const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); // Quitamos el prefijo
+        const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); 
         console.log('Base64 recortado:', trimmedBase64);
       };
-      reader.readAsDataURL(file); // Leemos el archivo como Data URL
+      reader.readAsDataURL(file);
     } else {
       console.log('No se seleccionó ningún archivo');
     }

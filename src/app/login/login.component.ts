@@ -27,14 +27,14 @@ export class LoginComponent {
           sessionStorage.setItem('usuario', JSON.stringify(response));
 
           const rol = response.rol;
+          console.log('Rol del usuario:', rol); // Imprime el rol en la consola
+          console.log('Respuesta completa de la API:', response);
+
           if (rol === 'Administrador') {
             this.router.navigate(['/admin']);
           } else if (rol === 'Docente') {
             this.router.navigate(['/docente']);
-          } else {
-            this.router.navigate(['/home']);
           }
-
         } else {
           Swal.fire({
             icon: 'error',

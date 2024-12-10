@@ -17,7 +17,7 @@ import { AdminComponent } from './admin/admin.component';
 export const routes: Routes = [
 
     {path: 'login', component:LoginComponent},
-    {path: 'home', component:HomeComponent},
+    {path: 'docente', component:HomeComponent},
     {path: 'crear', component:CrearComponent},
     {path: 'editar', component:EditarComponent},
     {path: 'mostrar', component:MostrarComponent},
@@ -25,9 +25,9 @@ export const routes: Routes = [
     {path: 'crear-materia', component:CrearMateriaComponent},
     {path: 'crear-profesor', component:CrearProfesorComponent},
     {path: 'editar-grupo', component:EditarGrupoComponent},
-    {path: 'mostrar-grupo', component:MostrarGruposComponent},
-    {path: 'mostrar-materia', component:MostrarMateriasComponent},
-    {path: 'mostrar-profesor', component:MostrarProfesorComponent},
+    {path: 'grupos', component:MostrarGruposComponent},
+    {path: 'materias', component:MostrarMateriasComponent},
+    {path: 'docentes', component:MostrarProfesorComponent},
     {path: 'admin', component:AdminComponent},
     { path: '**', redirectTo: '/login' }
 

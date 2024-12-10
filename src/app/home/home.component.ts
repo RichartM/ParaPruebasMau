@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+ export class HomeComponent implements OnInit {
   alumnos: any[] = [];
   usuarioActual: any;
 
@@ -68,3 +68,4 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']); // Redirige al login
   }
 }
+

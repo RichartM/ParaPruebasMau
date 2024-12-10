@@ -11,6 +11,7 @@ import { MostrarGruposComponent } from './mostrar-grupos/mostrar-grupos.componen
 import { MostrarMateriasComponent } from './mostrar-materias/mostrar-materias.component';
 import { EditarGrupoComponent } from './editar-grupo/editar-grupo.component';
 import { MostrarProfesorComponent } from './mostrar-profesor/mostrar-profesor.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 export const routes: Routes = [
@@ -27,6 +28,7 @@ export const routes: Routes = [
     {path: 'mostrar-grupo', component:MostrarGruposComponent},
     {path: 'mostrar-materia', component:MostrarMateriasComponent},
     {path: 'mostrar-profesor', component:MostrarProfesorComponent},
+    {path: 'admin', component:AdminComponent},
     { path: '**', redirectTo: '/login' }
 
 ];

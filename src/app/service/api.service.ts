@@ -8,24 +8,26 @@ import { Observable } from 'rxjs';
 export class ApiService {
   private usuarioActual: any = null;
 
-  private urlApi = 'http://localhost:8080/v3/alumnos';  // URL del backend
   private username: string = '';  // Aquí puedes guardar las credenciales si es necesario
   private password: string = '';
 
   constructor(private http: HttpClient) {}
 
-  // Método para autenticar y obtener acceso usando Basic Authentication
-  authenticate(username: string, password: string): Observable<any> {
-    // Codifica las credenciales en base64
-    const authHeader = `Basic ${btoa(`${username}:${password}`)}`;
-    console.log(authHeader);  // Verifica si la codificación es correcta
+  private urlApi = 'http://localhost:8080/login';  // URL de login del backend
 
-    // Realiza la solicitud GET con las credenciales de autenticación
+
+  // Método para autenticar con POST (con el cuerpo de la solicitud)
+  authenticate(email: string, password: string): Observable<any> {
+    // Crea el objeto con las credenciales para enviar en el cuerpo de la solicitud
+    const credentials = { email, password };
+
+    // Configura las cabeceras si es necesario (puedes añadir el tipo de contenido)
     const headers = new HttpHeaders({
-      'Authorization': authHeader  // Encabezado con las credenciales codificadas
+      'Content-Type': 'application/json'
     });
 
-    return this.http.get(`${this.urlApi}`, { headers, observe: 'response' });
+    // Realiza la solicitud POST con las credenciales en el cuerpo
+    return this.http.post(this.urlApi, credentials, { headers });
   }
 
   // Método para obtener los datos de alumnos

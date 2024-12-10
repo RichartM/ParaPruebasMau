@@ -1,88 +1,57 @@
-
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ApiService } from '../service/api.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import Swal from 'sweetalert2';  // Importa SweetAlert2
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  alumnos: any[] = [];
-  correo: string = '';  // Variable para el nombre de usuario
-  password: string = '';  // Variable para la contraseña
+  correo: string = '';
+  password: string = '';
 
-  constructor(private apiService: ApiService, private router:Router) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.apiService.authenticate('root', 'root123').subscribe(
-      response => {
-        console.log("datos cargados correctamente:");
-        this.apiService.setCredentials('root', 'root123');
-      },
-      error => {
-        console.error('Error de autenticación:', error);
-      }
-    );
-  }
-
-
-
-    
-  
   iniciarSesion(): void {
-    // Llamamos al servicio para obtener los datos
-    this.apiService.getData().subscribe(
+    this.apiService.authenticate(this.correo, this.password).subscribe(
       (response) => {
-        console.log('Respuesta del servidor:', response);
-  
-        // Validamos las credenciales comparando con los datos obtenidos
-        const usuario = response.alumnosResponse.alumnos.find(
-          (user: any) => user.correo === this.correo && user.password === this.password
-        );
-       
+        console.log('Usuario autenticado:', response);
 
-        if (usuario.estado){
-        if (usuario) {
-          
-          // Si se encuentra el usuario, almacenamos los datos en sessionStorage
-          sessionStorage.setItem('usuario', JSON.stringify(usuario)); // Guardamos el usuario en sessionStorage
-          this.apiService.setUsuarioActual(usuario); // Establecemos el usuario actual en el servicio
-          console.log('Usuario autenticado:', usuario);
-  
-          // Redirigimos al usuario a la página principal
-          this.router.navigate(['/home']);
-        }  
-        }else {
-          // Si no coinciden las credenciales, mostramos una alerta
-          alert('Credenciales incorrectas');
+        if (response && response.token) {
+          sessionStorage.setItem('usuario', JSON.stringify(response));
+
+          const rol = response.rol;
+          if (rol === 'Administrador') {
+            this.router.navigate(['/admin']);
+          } else if (rol === 'Docente') {
+            this.router.navigate(['/docente']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Credenciales incorrectas',
+            confirmButtonText: 'Intentar nuevamente'
+          });
         }
       },
       (error) => {
-        console.error('Error al obtener los datos:', error);
-      }
-    );
-  }
-
-  llenarData(): void {
-    this.apiService.getData().subscribe(
-      response => {
-        console.log('Respuesta del servidor:', response);
-        if (response && response.alumnosResponse && response.alumnosResponse.alumnos) {
-          this.alumnos = response.alumnosResponse.alumnos;
-          console.log('Alumnos cargados:', this.alumnos);
-        } else {
-          console.warn('Estructura de respuesta inesperada:', response);
-        }
-      },
-      error => {
-        console.error('Error al obtener los datos:', error);
+        console.error('Error al autenticar:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error de autenticación',
+          text: 'Hubo un problema al intentar iniciar sesión. Intenta nuevamente más tarde.',
+          confirmButtonText: 'Aceptar'
+        });
       }
     );
   }

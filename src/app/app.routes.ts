@@ -29,6 +29,7 @@ export const routes: Routes = [
     {path: 'materias', component:MostrarMateriasComponent},
     {path: 'docentes', component:MostrarProfesorComponent},
     {path: 'admin', component:AdminComponent},
+    {path: 'home', component:AdminComponent},
     { path: '**', redirectTo: '/login' }
 
 ];

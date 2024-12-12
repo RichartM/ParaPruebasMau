@@ -37,7 +37,13 @@
       <div class="mb-3">
         <label for="nombreMateria" class="form-label">Nombre de la materia</label>
         <input id="nombreMateria" type="text" class="form-control" [(ngModel)]="nuevaMateria.nombreMateria" name="nombreMateria" required />
-      </div>    
+      </div>
+    
+      <div class="form-check mb-3">
+        <input id="estado" type="checkbox" class="form-check-input" [(ngModel)]="nuevaMateria.estado" name="estado" />
+        <label class="form-check-label" for="estado">Activo</label>
+      </div>
+    
       <button type="submit" class="btn btn-primary">Registrar Materia</button>
     </form>
       

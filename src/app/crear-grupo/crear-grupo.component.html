@@ -34,6 +34,10 @@
     <h2>Registrar Grupo</h2>
     <form (ngSubmit)="registrarGrupo()">
       <div class="mb-3">
+        <label for="id_grupo" class="form-label">Id_grupo</label>
+        <input id="id_grupo" type="number" class="form-control" [(ngModel)]="nuevoGrupo.id_grupo" name="id_grupo" required />
+      </div>
+      <div class="mb-3">
         <label for="grado" class="form-label">Grado</label>
         <input id="grado" type="number" class="form-control" [(ngModel)]="nuevoGrupo.grado" name="grado" required />
       </div>

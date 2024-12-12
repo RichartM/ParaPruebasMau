@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiMateriaService } from '../service/api-materia.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';  // Importar SweetAlert2
 
 @Component({
   selector: 'app-crear-materia',
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 })
 export class CrearMateriaComponent {
 
-  nuevaMateria: any = {
+  nuevaMateria: any = {  // Valor predeterminado
     nombreMateria: '',
     estado: true
   };

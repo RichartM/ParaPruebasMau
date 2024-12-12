@@ -68,30 +68,58 @@
         <form>
           <div class="mb-3">
             <label for="grado" class="form-label">Grado</label>
-            <input id="grado" class="form-control" [(ngModel)]="grupoActual.grado" name="grado" />
+            <input
+              id="grado"
+              class="form-control"
+              [(ngModel)]="grupoActual.grado"
+              name="grado"
+              required
+            />
           </div>
           <div class="mb-3">
             <label for="grupo" class="form-label">Grupo</label>
-            <input id="grupo" class="form-control" [(ngModel)]="grupoActual.grupo" name="grupo" />
+            <input
+              id="grupo"
+              class="form-control"
+              [(ngModel)]="grupoActual.grupo"
+              name="grupo"
+              required
+            />
           </div>
           <div class="mb-3">
             <label for="carrera" class="form-label">Carrera</label>
-            <input id="carrera" class="form-control" [(ngModel)]="grupoActual.carrera" name="carrera" />
+            <input
+              id="carrera"
+              class="form-control"
+              [(ngModel)]="grupoActual.carrera"
+              name="carrera"
+              required
+            />
           </div>
           <div class="mb-3">
             <label for="estado" class="form-label">Estado</label>
-            <select id="estado" class="form-control" [(ngModel)]="grupoActual.estado" name="estado">
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
+            <select
+              id="estado"
+              class="form-control"
+              [(ngModel)]="grupoActual.estado"
+              name="estado"
+            >
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
             </select>
           </div>
           <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-primary" (click)="guardarCambios()">Guardar</button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+            <button type="button" class="btn btn-primary" (click)="guardarCambios()">
+              Guardar
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">
+              Cancelar
+            </button>
           </div>
         </form>
       </div>
     </div>
+    
   </div>
 
   <!-- Enlace a los scripts de Bootstrap 5 -->

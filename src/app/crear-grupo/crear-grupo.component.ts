@@ -2,19 +2,19 @@ import { Component } from '@angular/core';
 import { ApiGruposService } from '../service/api-grupos.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import Swal from 'sweetalert2'; 
+import { FormsModule } from '@angular/forms'; // Importamos FormsModule para formularios
 
 @Component({
   selector: 'app-crear-grupo',
-  imports: [CommonModule, FormsModule], 
+  imports: [CommonModule, FormsModule], // Importamos los módulos necesarios
   templateUrl: './crear-grupo.component.html',
-  styleUrls: ['./crear-grupo.component.css'], 
+  styleUrls: ['./crear-grupo.component.css'], // Corregimos 'styleUrl' a 'styleUrls'
   standalone: true
 })
 export class CrearGrupoComponent {
 
-  nuevoGrupo: any = { 
+  // Modelo del nuevo grupo con valores predeterminados
+  nuevoGrupo: any = {
     grado: 0,
     grupo: '',
     carrera: '',
@@ -24,6 +24,7 @@ export class CrearGrupoComponent {
   constructor(private apiService: ApiGruposService, private router: Router) {}
 
   ngOnInit(): void {
+    // Validación de autenticación
     if (!this.apiService.isAuthenticated()) {
       console.log('Sesión no iniciada. Redirigiendo al login...');
       this.router.navigate(['/login']);
@@ -33,43 +34,23 @@ export class CrearGrupoComponent {
     }
   }
 
+  // Método para registrar un grupo
   registrarGrupo(): void {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Se registrará el grupo con los datos proporcionados.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Registrar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        console.log('Datos del grupo a enviar:', this.nuevoGrupo);
-        this.apiService.registrarGrupo(this.nuevoGrupo).subscribe({
-          next: (response) => {
-            console.log('Grupo registrado con éxito:', response);
-            Swal.fire({
-              title: '¡Éxito!',
-              text: 'Grupo registrado correctamente.',
-              icon: 'success',
-              confirmButtonText: 'Aceptar'
-            }).then(() => {
-              this.router.navigate(['/grupos']);
-            });
-          },
-          error: (error) => {
-            console.error('Error al registrar el grupo:', error);
-            Swal.fire({
-              title: 'Error',
-              text: 'No se pudo registrar el grupo. Inténtalo nuevamente.',
-              icon: 'error',
-              confirmButtonText: 'Aceptar'
-            });
-          }
-        });
+    console.log('Datos del grupo a enviar:', this.nuevoGrupo);
+    this.apiService.registrarGrupo(this.nuevoGrupo).subscribe({
+      next: (response) => {
+        console.log('Grupo registrado con éxito:', response);
+        alert('Grupo registrado correctamente');
+        this.router.navigate(['/grupos']); // Redirigir a la lista de grupos
+      },
+      error: (error) => {
+        console.error('Error al registrar el grupo:', error);
+        alert('Error al registrar el grupo');
       }
     });
   }
 
+  // Método opcional para procesar imágenes (puedes eliminarlo si no es necesario)
   procesarImagen(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -78,20 +59,20 @@ export class CrearGrupoComponent {
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result as string;
-        const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); 
+        const trimmedBase64 = base64.substring(base64.indexOf(',') + 1); // Quitamos el prefijo
         console.log('Base64 recortado:', trimmedBase64);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Leemos el archivo como Data URL
     } else {
       console.log('No se seleccionó ningún archivo');
     }
   }
 
+  // Método para cerrar sesión
   cerrarSesion(): void {
     sessionStorage.removeItem('usuario');
     this.apiService.setUsuarioActual(null);
     console.log('Sesión cerrada');
     this.router.navigate(['/login']);
   }
-
 }

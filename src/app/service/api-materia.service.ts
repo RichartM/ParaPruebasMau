@@ -59,19 +59,23 @@ export class ApiMateriaService {
   getUsuarioActual(): any {
     return this.usuarioActual;
   }
-
-  // Método para actualizar los datos del usuario
-  actualizarMateria(id: number, usuario: any): Observable<any> {
+  
+  actualizarMateria(materia: any, id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Basic ${btoa(`${this.username}:${this.password}`)}`
     });
-    
+    return this.http.put(`${this.urlApi}/${id}`, materia, { headers });
+  }
+  
 
-    return this.http.put(`${this.urlApi}/${id}`, usuario, { headers });
+  // Método para registrar una nueva materia
+  registrarMateria(materia: any): Observable<any> {
+    return this.http.post(this.urlApi, materia);
   }
 
-  registrarMateria(materias: any): Observable<any> {
-    return this.http.post(this.urlApi, materias);
+  // Método para actualizar una materia seleccionada
+  updateMateria(materiaSeleccionada: any): Observable<any> {
+    return this.http.put(`${this.urlApi}/${materiaSeleccionada.id}`, materiaSeleccionada);
   }
 }
